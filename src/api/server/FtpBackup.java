@@ -18,6 +18,10 @@ public class FtpBackup {
     private Number quota_files;
     private Number quota_files_used;    
 
+    /**
+     * Get "username" for login, this will usually be in the form of a server ID e.g. sd-123456
+     * @return login
+     */
     public String getLogin() {
         return login;
     }
@@ -26,6 +30,10 @@ public class FtpBackup {
         this.login = login;
     }
 
+    /**
+     * Address of this backup server.
+     * @return address
+     */
     public String getServer() {
         return server;
     }
@@ -58,6 +66,10 @@ public class FtpBackup {
         this.autologin = autologin;
     }
 
+    /**
+     * Get space quota in bytes.
+     * @return quota in bytes
+     */
     public Number getSpaceQuota() {
         return quota_space;
     }
@@ -66,6 +78,10 @@ public class FtpBackup {
         this.quota_space = quota_space;
     }
 
+    /**
+     * Get used space in bytes.
+     * @return used space in bytes
+     */
     public Number getSpaceQuotaUsed() {
         return quota_space_used;
     }
@@ -74,6 +90,10 @@ public class FtpBackup {
         this.quota_space_used = quota_space_used;
     }
 
+    /**
+     * Get file quota.
+     * @return number of files this backup can host
+     */
     public Number getFilesQuota() {
         return quota_files;
     }
@@ -82,6 +102,10 @@ public class FtpBackup {
         this.quota_files = quota_files;
     }
 
+    /**
+     * Get used file quota.
+     * @return number of files present on this backup
+     */
     public Number getFilesQuotaUsed() {
         return quota_files_used;
     }
