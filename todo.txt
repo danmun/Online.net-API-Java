@@ -1,0 +1,102 @@
+- the issue is that Map<String,String> parameters will consider values like numbers and booleans as string...
+  server expects the appropriate type e.g. String for names and boolean for options, but the param builder
+  converts all these to strings before sending... need to figure out a way around this
+
+- toString() for all classes (where not done yet)
+
+- instead of using Map<> for params, use JSONParams or whatever it's called
+  would be more useful for POSTing stuff like boolean and lists
+  see http://stackoverflow.com/questions/8194781/post-a-list-of-items-using-rest
+
+- IllegalStateException is IOException, so might be worth removing that from all the method signatures
+
+- note that some methods (or maybe all) requiring server ID may also be able to take a string as a server id
+  might also be e.g. sd-90099 as well as just an id e.g. 90099
+
+- where API says call returns nothing, return the HTTP code as a string or an int;
+  e.g. /network/secondaryDns/{domain} calls "Return nothing, with an HTTP code 204."
+       so just make it have a return type String or int with the http code as return value
+       (this will require changing code in postMethod in Connection and specific methods in API 
+       classes which have void return type
+
+- see comments of addServer in RpnSan about up-to-date objects, will apply to a lot of
+  other methods in other classes/packages!!
+
+- move licence to licence.md and keep a short reference to it in all files
+
+api.rpn
+    GET /rpn/group Get a list of RPN groups
+    POST /rpn/group Create an RPN group
+    POST /rpn/group/addServers Add or invite servers to an RPN group
+    POST /rpn/group/removeServers Remove servers from an RPN group
+    GET /rpn/group/{group_id} Get information on a RPN group
+api.hosting
+    GET /hosting Get a list of links to the user's hostings
+    GET /hosting/{hosting_id} Get information on a hosting
+    PATCH /hosting/{hosting_id} Edit a user's hosting
+    GET /hosting/{hosting_id}/database Get a list of databases on the user's hosting
+    POST /hosting/{hosting_id}/database Create a database
+    GET /hosting/{hosting_id}/database/{database_id} Get information on a database
+    DELETE /hosting/{hosting_id}/database/{database_id} Delete a database
+    PATCH /hosting/{hosting_id}/database/{database_id} Edit a database
+    GET /hosting/{hosting_id}/email Get a list of e-mail accounts on the user's hosting
+    POST /hosting/{hosting_id}/email Create an e-mail account
+    GET /hosting/{hosting_id}/email/forward Get a list of e-mail forwards on the user's hosting
+    POST /hosting/{hosting_id}/email/forward Create an e-mail forward
+    GET /hosting/{hosting_id}/email/forward/{email_forward_id} Get information on an e-mail forward
+    DELETE /hosting/{hosting_id}/email/forward/{email_forward_id} Delete an e-mail forward
+    GET /hosting/{hosting_id}/email/redirection Get a list of e-mail redirections on the user's hosting
+    POST /hosting/{hosting_id}/email/redirection Create an e-mail redirection
+    GET /hosting/{hosting_id}/email/redirection/{email_redirection_id} Get information on an e-mail redirection
+    DELETE /hosting/{hosting_id}/email/redirection/{email_redirection_id} Delete an e-mail redirection
+    GET /hosting/{hosting_id}/email/{email_id} Get information on an e-mail account
+    DELETE /hosting/{hosting_id}/email/{email_id} Delete an e-mail account
+    PATCH /hosting/{hosting_id}/email/{email_id} Edit an e-mail account
+    GET /hosting/{hosting_id}/ftp Get a list of FTP accounts on the user's hosting
+    POST /hosting/{hosting_id}/ftp Create an FTP account
+    GET /hosting/{hosting_id}/ftp/{ftp_id} Get information on an FTP account
+    DELETE /hosting/{hosting_id}/ftp/{ftp_id} Delete an FTP account
+    PATCH /hosting/{hosting_id}/ftp/{ftp_id} Edit an FTP account
+    GET /hosting/{hosting_id}/task Get a list of scheduled tasks on the user's hosting
+    POST /hosting/{hosting_id}/task Create a scheduled task
+    GET /hosting/{hosting_id}/task/{task_id} Get information on a scheduled task
+    DELETE /hosting/{hosting_id}/task/{task_id} Delete a scheduled task
+    PATCH /hosting/{hosting_id}/task/{task_id} Edit a scheduled task
+api.storage.c14
+    GET /storage/c14/platform Get a list of links to the platforms
+    GET /storage/c14/platform/{platform_id} Get information on a platform
+    GET /storage/c14/protocol Get a list of available file transfer protocols
+    GET /storage/c14/safe Get a list of links to the user's safes
+    POST /storage/c14/safe Create a safe
+    GET /storage/c14/safe/{safe_id} Get information on a safe
+    DELETE /storage/c14/safe/{safe_id} Delete a safe
+    PATCH /storage/c14/safe/{safe_id} Edit a safe
+    GET /storage/c14/safe/{safe_id}/archive Get a list of archives in the user's safe
+    POST /storage/c14/safe/{safe_id}/archive Create an archive
+    GET /storage/c14/safe/{safe_id}/archive/{archive_id} Get information on an Archive
+    DELETE /storage/c14/safe/{safe_id}/archive/{archive_id} Delete an archive
+    PATCH /storage/c14/safe/{safe_id}/archive/{archive_id} Edit an archive
+    POST /storage/c14/safe/{safe_id}/archive/{archive_id}/archive Archive files from temporary storage
+    GET /storage/c14/safe/{safe_id}/archive/{archive_id}/bucket Get information on an archive's temporary storage
+    GET /storage/c14/safe/{safe_id}/archive/{archive_id}/job Get list of archive jobs
+    GET /storage/c14/safe/{safe_id}/archive/{archive_id}/job/{job_id} Get informations of a job
+    GET /storage/c14/safe/{safe_id}/archive/{archive_id}/key Get an archive's encryption key
+    POST /storage/c14/safe/{safe_id}/archive/{archive_id}/key Set an archive's encryption key
+    DELETE /storage/c14/safe/{safe_id}/archive/{archive_id}/key Delete an archive's encryption key
+    GET /storage/c14/safe/{safe_id}/archive/{archive_id}/location Get a list of locations on the user's archive
+    GET /storage/c14/safe/{safe_id}/archive/{archive_id}/location/{location_id} Get information on an archive location
+    POST /storage/c14/safe/{safe_id}/archive/{archive_id}/location/{location_id}/verify Verify the files on an archive's location
+    POST /storage/c14/safe/{safe_id}/archive/{archive_id}/unarchive Unarchive files into temporary storage
+
+mostly done:
+api.server:
+    POST /server/backup/archive Archive a server's FTP backup on C14 [ - need to figure out how to POST list of strings for this one - ]
+    (otherwise all done)
+api.network:
+    comment it!
+    recheck code if necessary but should be functional
+api.storage
+    check and comment
+
+done:
+-OperatingSystem seems to have to versions, decide on how to implement
