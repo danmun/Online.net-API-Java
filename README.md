@@ -1,7 +1,7 @@
 # Online.net-API-Java
 Java wrapper for Online.net API (https://console.online.net/en/api/)
 
-See src/example/Main.java for usage examples.
+See [src/example/Main.java](https://github.com/danmun/Online.net-API-Java/blob/master/src/example/Main.java) for usage examples.
 
 The following services are not yet complete:
 
